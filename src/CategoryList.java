@@ -13,6 +13,7 @@ public class CategoryList extends CategoryNode
 	
 	LinkedList<CategoryNode> allCategories = new LinkedList<CategoryNode> ();
 	LinkedList<FoodItem> linkedFoods = new LinkedList<FoodItem> ();
+//	LinkedList<LinkedList> doubleLink = new LinkedList<LinkedList> ();
 	Scanner keyboard = new Scanner (System.in);
 	
 	//constructor
@@ -42,24 +43,34 @@ public class CategoryList extends CategoryNode
 		readCategoriesFile(scanFile);
 	}
 	
-	//this method will convert the categories into a linked list of linked fooditems
-	public void matchedList ()
-	{
-		LinkedListClass l = new LinkedListClass ();
-		l.readFoodList(l, "foodlist.txt");
-		linkedFoods.clear();
-		System.out.println("Enter the category to retrieve the inventory:");
-		String match = keyboard.nextLine();
-		System.out.println("Food: " + l.food.toString());
-		for (FoodItem f : l.food)
-		{
-			if (f.getCategory().equalsIgnoreCase(match))
-			{
-				linkedFoods.add(f);
-			}
-		}
-		System.out.println(linkedFoods.toString());
-	}
+//	//this method will convert the categories into a linked list of linked fooditems
+//	public void matchedList ()
+//	{
+//		LinkedListClass l = new LinkedListClass ();
+//		l.readFoodList(l, "foodlist.txt");
+//		linkedFoods.clear();
+//		doubleLink.clear();
+//		int index = 0;
+//		for (CategoryNode c : allCategories)
+//		{
+//			System.out.println("category read test");
+//			for (FoodItem f : l.food)
+//			{
+//				System.out.println("Food read test");
+//				if (f.getCategory().equalsIgnoreCase(c.getCategoryName()))
+//
+//				{
+//					linkedFoods.add(f);
+//				}
+//			}
+//			System.out.println("LINKED FOODS:\n" + linkedFoods.toString());
+//			doubleLink.add(index, linkedFoods);
+//			linkedFoods.clear();
+//			System.out.println("DOUBLE LIST: \n" + doubleLink.toString());
+//		}
+////		System.out.println(doubleLink.toString());
+//		index++;
+//	}
 
 	//add a new category
 	public void addCategory ()
@@ -70,6 +81,7 @@ public class CategoryList extends CategoryNode
 //		c.setCategoryName(keyboard.nextLine());
 		allCategories.add(c);
 		rewriteAddCat();
+		System.out.println("CATEGORY ADDED:\n" + c.toString());
 		JOptionPane.showMessageDialog(null,"Add Successful!");
 	}
 	
@@ -88,6 +100,7 @@ public class CategoryList extends CategoryNode
 				int a = JOptionPane.showConfirmDialog(null, "This will permanently delete " + catName.toUpperCase() + " and all included inventory. Continue?");
 				if (a == 0)
 				{
+					System.out.println("CATEGORY DELETED:\n" + allCategories.get(index).toString());
 					allCategories.remove(index);
 					rewriteCatDelete();//rewrites the file to match updated inventory
 					l.deleteNode(catName);
@@ -121,7 +134,8 @@ public class CategoryList extends CategoryNode
 			if (catUpdate.equalsIgnoreCase(cn.getCategoryName()))
 			{
 				newName = JOptionPane.showInputDialog("Enter the updated category name:");
-				cn.setCategoryName(newName);
+				cn.setCategoryName(newName);//new name for category
+				System.out.println("CATEGORY UPDATED:\n" + cn.toString());
 				match = true;
 				break;
 			}
@@ -131,6 +145,7 @@ public class CategoryList extends CategoryNode
 			if (catUpdate.equalsIgnoreCase(f.getCategory()))
 			{
 				f.setCategory(newName);
+				System.out.println("ITEM UPDATED:\n" + f.toString());
 			}
 		}
 		if (match == false)
@@ -148,16 +163,26 @@ public class CategoryList extends CategoryNode
 		LinkedListClass l = new LinkedListClass ();
 		l.readFoodList(l, "foodlist.txt");
 		linkedFoods.clear();
-//		System.out.println("Enter the category to retrieve the inventory:");
-//		String match = keyboard.nextLine();
+		boolean match = false;
 		for (FoodItem f : l.food)
 		{
 			if (f.getCategory().equalsIgnoreCase(search))
 			{
 				linkedFoods.add(f);
+				match = true;
 			}
 		}
-		System.out.println(linkedFoods.toString());
+		if (match == false)//catch if category not found
+		{
+			throw new ItemNotFoundException("Category Not Found.");
+		}
+		else 
+			System.out.println("SEARCH RESULTS:");
+		for (FoodItem fi : linkedFoods)//for better display to console
+		{
+			System.out.println(fi.toString());
+		}
+		
 	}
 	
 	//rewrite file to add category

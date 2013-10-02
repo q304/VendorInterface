@@ -18,14 +18,16 @@ public class CategoryNode extends LinkedListNode
 		categoryName = "";
 	}
 	
+	//read line in file
 	public void readCategories (Scanner read)
 	{
 		categoryName = read.nextLine();
 	}
 	
+	//to string method
 	public String toString ()
 	{
-		return ("Category Name: " + categoryName);
+		return ("Category Name: " + categoryName + "\n");
 	}
 	
 	public int getNumCatEntries() {

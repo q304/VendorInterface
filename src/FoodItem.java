@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
 	
 public class FoodItem 
 {
@@ -14,6 +15,8 @@ public class FoodItem
 	private String description;
 	private String size;
 	private int entryNumber;
+	
+	DecimalFormat m = new DecimalFormat("##.00");//for money
 	
 	//constructor
 	public FoodItem ()
@@ -43,11 +46,10 @@ public class FoodItem
 	public String toString()
 	{
 		return ("Name: " + name +
-				"\nPrice: $" + price +
+				"\nPrice: $" + m.format(price) +
 				"\nQuantity: " + quantity +
 				"\nDescription: " + description +
 				"\nSize: " + size +
-//				"\nSpecial Order:" + specialOrder+
 				"\n");
 				
 	}

@@ -24,6 +24,44 @@ public class LinkedListClass extends LinkedListNode
 		l.readFile(scanFile);
 	}
 	
+	//method to add a node
+	public void addNode ()
+	{
+		CategoryList c = new CategoryList ();//instantiate to check for category match
+		c.readCategoryList("categories.txt");
+		boolean match = false;
+		FoodItem n = new FoodItem ();
+		String cat = JOptionPane.showInputDialog("Enter a category for the new item:");
+		for (CategoryNode cl : c.allCategories)
+		{
+			if (cat.equalsIgnoreCase(cl.getCategoryName()))
+			{
+				match = true;
+				break;
+			}
+		}
+		if (match == false)
+		{
+			throw new ItemNotFoundException ("Category Does Not Exist.");
+		}
+		else
+			n.setCategory(cat);
+		String na = JOptionPane.showInputDialog("Enter a name for the new item:");
+		n.setName(na);
+		double cost = Double.parseDouble(JOptionPane.showInputDialog("Enter a price for the new item:"));
+		n.setPrice(cost);
+		int quan = Integer.parseInt(JOptionPane.showInputDialog("Enter a quantity for the new item:"));
+		n.setQuantity(quan);
+		String des = JOptionPane.showInputDialog("Enter a description for the new item:");
+		n.setDescription(des);
+		String si = JOptionPane.showInputDialog("Enter a size for the new item:");
+		n.setSize(si);
+		food.add(n);
+		rewriteAdd();
+		System.out.println("ITEM ADDED:\n" + n.toString());
+		JOptionPane.showMessageDialog(null,"Add successful!");
+	}
+	
 	//method to delete a node
 	public void deleteNode ()
 	{
@@ -35,8 +73,9 @@ public class LinkedListClass extends LinkedListNode
 			if (name.equalsIgnoreCase(f.getName()))//find appropriate item to delete
 			{
 				int a = JOptionPane.showConfirmDialog(null, "This will permanently delete item " + name.toUpperCase() + ". Continue?");
-				if (a ==0)
+				if (a == 0)
 				{
+					System.out.println("ITEM DELETED:\n" + food.get(index).toString());
 					food.remove(index);
 					rewriteDelete();//rewrites the file to match updated inventory
 					JOptionPane.showMessageDialog(null, "Delete successful!");
@@ -69,6 +108,7 @@ public class LinkedListClass extends LinkedListNode
 			{
 				if (name.equalsIgnoreCase(f.getCategory()))//find appropriate item to delete
 				{
+					System.out.println("ITEM DELETED:\n" + f.toString());
 					food.remove();
 					break;
 				}
@@ -77,37 +117,16 @@ public class LinkedListClass extends LinkedListNode
 		}
 		rewriteDelete();//update inventory file
 	}
-	//method to add a node
-	public void addNode ()
-	{
-		FoodItem n = new FoodItem ();
-		String cat = JOptionPane.showInputDialog("Enter a category for the new item:");
-		n.setCategory(cat);
-		String na = JOptionPane.showInputDialog("Enter a name for the new item:");
-		n.setName(na);
-		double cost = Double.parseDouble(JOptionPane.showInputDialog("Enter a price for the new item:"));
-		n.setPrice(cost);
-		int quan = Integer.parseInt(JOptionPane.showInputDialog("Enter a quantity for the new item:"));
-		n.setQuantity(quan);
-		String des = JOptionPane.showInputDialog("Enter a description for the new item:");
-		n.setDescription(des);
-		String si = JOptionPane.showInputDialog("Enter a size for the new item:");
-		n.setSize(si);
-		food.add(n);
-		rewriteAdd();
-		JOptionPane.showMessageDialog(null,"Add successful!");
-	}
-	
+
 	//search linked list for matching item name
 	public void searchNode (String search)
 	{
-//		System.out.println("Enter the name of the item you wish to search:");
-//		String search = keyboard.nextLine();
 		boolean match = false;
 		for (FoodItem f: food)
 		{
 			if (search.equalsIgnoreCase(f.getName()))
 			{
+				System.out.println("SEARCH RESULTS:");
 				System.out.println(f.toString());
 				match = true;
 				break;
@@ -117,7 +136,6 @@ public class LinkedListClass extends LinkedListNode
 		{
 			throw new ItemNotFoundException("Item not found in inventory.");
 		}
-		System.out.println(match);
 	}
 	
 	//method to update the node
@@ -135,30 +153,35 @@ public class LinkedListClass extends LinkedListNode
 				case "name":
 					String newName = JOptionPane.showInputDialog("Enter the new name:");
 					f.setName(newName);
+					System.out.println("ITEM UPDATED:\n" + f.toString());
 					rewriteUpdate();
 					JOptionPane.showMessageDialog(null, "Update successful!");
 					break;
 				case "price":
 					double newPrice = Double.parseDouble(JOptionPane.showInputDialog("Enter the new price:"));
 					f.setPrice(newPrice);
+					System.out.println("ITEM UPDATED:\n" + f.toString());
 					rewriteUpdate();
 					JOptionPane.showMessageDialog(null, "Update successful!");
 					break;
 				case "quantity":
 					int newQuant = Integer.parseInt(JOptionPane.showInputDialog("Enter the new quantity:"));
 					f.setQuantity(newQuant);
+					System.out.println("ITEM UPDATED:\n" + f.toString());
 					rewriteUpdate();
 					JOptionPane.showMessageDialog(null, "Update successful!");
 					break;
 				case "description":
 					String newDes = JOptionPane.showInputDialog("Enter a new description:");
 					f.setDescription(newDes);
+					System.out.println("ITEM UPDATED:\n" + f.toString());
 					rewriteUpdate();
 					JOptionPane.showMessageDialog(null, "Update successful!");
 					break;
 				case "size":
 					String newSize = JOptionPane.showInputDialog("Enter a new size:");
 					f.setSize(newSize);
+					System.out.println("ITEM UPDATED:\n" + f.toString());
 					rewriteUpdate();
 					JOptionPane.showMessageDialog(null, "Update successful!");
 					break;
@@ -177,7 +200,7 @@ public class LinkedListClass extends LinkedListNode
 	}
 	
 	//rewrite methods update the list of nodes in the binary file
-	private void rewriteDelete ()
+	private void rewriteAdd ()
 	{
 		PrintWriter outStream = TextFileIO.createTextWrite("foodlist.txt");
 		numItemEntries = food.size();
@@ -194,7 +217,7 @@ public class LinkedListClass extends LinkedListNode
 		outStream.close();
 	}
 	
-	private void rewriteAdd ()
+	private void rewriteDelete ()
 	{
 		PrintWriter outStream = TextFileIO.createTextWrite("foodlist.txt");
 		numItemEntries = food.size();
