@@ -1,0 +1,98 @@
+16
+Drink
+Large Coke
+1.50
+100
+Large Coca-cola soda
+Large
+Drink
+Small Coke
+1.00
+100
+Small Coca-cola soda
+Small
+Drink
+Large Diet Coke
+1.50
+100
+Large Diet Coca-cola soda
+Large
+Drink
+Small Diet Coke
+1.00
+100
+Small Diet Coca-cola soda
+Small
+Meal
+Cheeseburger
+4.00
+50
+Single Cheeseburger
+Single
+Meal
+Double Cheeseburger
+6.00
+50
+Double Cheeseburger
+Double
+Meal
+Chicken
+4.50
+50
+Fried Chicken sandwich
+Single
+Meal
+Salad
+5.50
+25
+Chicken Salad with Ranch
+Single
+Side
+Large Fry
+2.00
+100
+Large French Fries
+Large
+Side
+Medium Fry
+1.50
+100
+Medium French Fries
+Medium
+Side
+Small Fry
+1.00
+100
+Small French Fries
+Small
+Side
+Onion Ring
+1.50
+50
+Side Onion Rings
+Medium
+Dessert
+Apple Pie
+1.00
+50
+Slice of Apple Pie
+Single
+Dessert
+Pumpkin Pie
+1.00
+50
+Slice of Pumpkin Pie
+Single
+Dessert
+Cherry Pie
+1.00
+50
+Slice of Cherry Pie
+Single
+Dessert
+Cookies
+1.00
+100
+Two Chocolate Chip Cookies
+Single
+Medium
